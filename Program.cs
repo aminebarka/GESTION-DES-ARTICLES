@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
+using WebApplication2.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContextPool<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("ProductDBConnection")));
+builder.Services.AddScoped<IRepository<Product>, SqlProductRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

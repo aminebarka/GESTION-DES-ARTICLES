@@ -1,41 +1,40 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication2.Models;
-using WebApplication2.Models.Repositories;
 using WebApplication2.Models.Repositories;
 using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
-    public class ProductController1 : Controller
+    public class ControllerProduct : Controller
     {
-        private readonly IRepository<Product> ProductRepository;
-        //injection de dépendance
-        public ProductController1(IRepository<Product> prodRepository)
+        readonly IRepository<Product> ProductRepository;
+        //private readonly IWebHostEnvironment hostingEnvironment;
+        public ControllerProduct(IRepository<Product> ProdRepository)//, IWebHostEnvironment hostingEnvironment)
         {
-            ProductRepository = prodRepository;
+            ProductRepository = ProdRepository;
+           // this.hostingEnvironment = hostingEnvironment;
         }
-        // GET: ProductController
+        // GET: ControllerProduct
         public ActionResult Index()
         {
-            var product = ProductRepository.GetAll();
-            return View(product);
+            var products = ProductRepository.GetAll();
+            return View(products);
         }
 
-        // GET: ProductController/Details/5
+        // GET: ControllerProduct/Details/5
         public ActionResult Details(int id)
         {
-            var product = ProductRepository.Get(id);
-            return View(product);
+            var p = ProductRepository.Get(id);
+            return View(p);
         }
 
-        // GET: ProductController/Create
+        // GET: ControllerProduct/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ProductController/Create
+        // POST: ControllerProduct/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Product p)
@@ -51,21 +50,21 @@ namespace WebApplication2.Controllers
             }
         }
 
-        // GET: ProductController/Edit/5
+        // GET: ControllerProduct/Edit/5
         public ActionResult Edit(int id)
         {
-            var product = ProductRepository.Get(id);
-            return View(product);
+            var p = ProductRepository.Get(id);
+            return View(p);
         }
 
-        // POST: ProductController/Edit/5
+        // POST: ControllerProduct/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Product newproduct)
+        public ActionResult Edit(int id, Product p)
         {
             try
             {
-                ProductRepository.Update(newproduct);
+                ProductRepository.Update(p);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -74,14 +73,14 @@ namespace WebApplication2.Controllers
             }
         }
 
-        // GET: ProductController/Delete/5
+        // GET: ControllerProduct/Delete/5
         public ActionResult Delete(int id)
         {
-            var product = ProductRepository.Get(id);
-            return View(product);
+            var p = ProductRepository.Get(id);
+            return View(p);
         }
 
-        // POST: ProductController/Delete/5
+        // POST: ControllerProduct/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Product p)
